@@ -1,0 +1,11 @@
+ea/
+.vscode/
+.venv*/
+venv*/
+_pycache_/
+dist/
+.coverage*
+htmlcov/
+.tox/
+flask_session/
+docs/_build/

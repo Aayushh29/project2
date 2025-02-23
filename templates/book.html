@@ -30,6 +30,7 @@
             <p><strong>ISBN:</strong> {{ book.isbn }}</p>
             <p><strong>Google Rating:</strong> {{ google_rating or "No Rating Available" }}</p>
             <p><strong>OpenLibrary Rating:</strong> {{ openlibrary_rating or "No Rating Available" }}</p>
+            <p><strong>Summary from Gemini</strong> {{ gemini_summary or "No Summary Available" }}</p>
         </div>
     </div>
 
@@ -43,12 +44,17 @@
             {% endfor %}
         </ul>
 
+        {% if not show_rev_section %}
         <h2>Leave a Review</h2>
         <form method="POST">
             <textarea name="review" placeholder="Write your review here..." required></textarea>
             <input type="number" name="rating" min="1" max="5" placeholder="Rating (1-5)" required>
             <button type="submit">Submit Review</button>
         </form>
+    {% else %}
+        <p><strong>You have already reviewed this book.</strong></p>
+    {% endif %}
+    
     </div>
 </body>
 

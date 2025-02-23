@@ -12,7 +12,7 @@ def import_books():
         reader = csv.reader(file)
         next(reader)  # Skip header
         for isbn, title, author, year in reader:
-            db.execute(text("INSERT INTO  (isbn, title, author, year) VALUES (:isbn, :title, :author, :year)"), 
+            db.execute(text("INSERT INTO  books(isbn, title, author, year) VALUES (:isbn, :title, :author, :year)"), 
                        {"isbn": isbn, "title": title, "author": author, "year": int(year)})
         db.commit()
 
