@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Books</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+        {% if 'user_id' in session %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+    </nav>
+    <div class="container">
+        <h1>Search for Books</h1>
+        <form method="GET">
+            <input type="text" name="query" placeholder="Enter book title, author, or ISBN" required>
+            <button type="submit">Search</button>
+        </form>
+        
+        <h2>Results</h2>
+        {% if books %}
+            <ul class="book-list">
+                {% for book in books %}
+                    <li><a href="/book/{{ book.isbn }}">{{ book.title }} by {{ book.author }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+        {% if 'user_id' in session %}
+        <a href="/logout">Logout</a>
+        {% else %}
+        <a href="/login">Login</a>
+        {% endif %}
+    </nav>
+    <div class="container book-details">
+        {% if book_image %}
+        <img src="{{ book_image }}" alt="Book Cover" class="book-cover">
+        {% endif %}
+        <div class="book-info">
+            <h1>{{ google_book.title or book.title }}</h1>
+            <p><strong>Author:</strong> {{ (google_book.authors | join(', ')) if google_book.authors else book.author }}
+            </p>
+            <p><strong>Year:</strong> {{ book.year }}</p>
+            <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+            <p><strong>Google Rating:</strong> {{ google_rating or "No Rating Available" }}</p>
+            <p><strong>OpenLibrary Rating:</strong> {{ openlibrary_rating or "No Rating Available" }}</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Reviews</h2>
+        <ul class="book-list">
+            {% for review in reviews %}
+            <li><strong>{{ review.user_id }}:</strong> {{ review.review }} (Rating: {{ review.rating }})</li>
+            {% else %}
+            <li>No reviews yet.</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Leave a Review</h2>
+        <form method="POST">
+            <textarea name="review" placeholder="Write your review here..." required></textarea>
+            <input type="number" name="rating" min="1" max="5" placeholder="Rating (1-5)" required>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+</body>
+
+</html>
